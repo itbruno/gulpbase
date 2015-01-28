@@ -1,5 +1,5 @@
 # GulpBase
-GulpBase is base structure for personal projects using [GulpJS](http://gulpjs.com)
+GulpBase is base structure for personal projects using [GulpJS](http://gulpjs.com), the idea is make more simple much possible to create a simple project.
 
 ## Get Started
 Before start with the project, install gulp globally
