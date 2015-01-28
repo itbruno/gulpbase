@@ -9,5 +9,11 @@ $ npm install -g gulp
 
 Now clone the project locally and install all dependencies
 ```
-$ npm install --save-dev
+$ npm install
 ```
+## Modules
+ - Gulp
+ - gulp-ruby-sass
+ - gulp-imagemin
+ - gulp-uglify
+ - del
