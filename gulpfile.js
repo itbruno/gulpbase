@@ -21,10 +21,11 @@ gulp.task('jsmin', function(){
 gulp.task('compile-sass', function(){
 	return gulp.src(path.styles[0] + '*.scss')
 		.pipe(sass({
+			sourcemap: false,
 			style: "compressed",
 			noCache: true
 		})).on('error', function(err) {
-			console.log(err.message);
+			console.log('ERROR:', err.message);
 		})
 		.pipe(gulp.dest(path.styles[1]))
 });
@@ -35,7 +36,7 @@ gulp.task('imagemin', function(){
 	.pipe(imagemin({
 		optimizationLevel: 7,
 		progressive: true,
-		interlaced: true	
+		interlaced: true
 	}))
 	.pipe(gulp.dest('assets/images'))
 });
@@ -54,6 +55,3 @@ gulp.task('watch', function(){
 	gulp.watch('dev/sass/*.scss', ['compile-sass']);
 	gulp.watch('dev/images', ['imagemin']);
 })
-
-// Exports
-module.exports = gulp;
