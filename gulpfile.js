@@ -7,7 +7,8 @@ var gulp = require("gulp"),
 
 var path = {
 	styles: ['dev/style/', 'assets/style/'],
-	scripts: ['dev/js/', 'assets/js']
+	scripts: ['dev/js/', 'assets/js'],
+	images: ['dev/images', 'assets/images']
 }
 
 // Uglify JS
@@ -52,6 +53,7 @@ gulp.task('default', ['clean'], function(){
 
 // Gulp Watch
 gulp.task('watch', function(){
-	gulp.watch('dev/style/*.scss', ['compile-sass']);
-	gulp.watch('dev/images', ['imagemin']);
+	gulp.watch(path.styles[0] + '*.scss', ['compile-sass']);
+	gulp.watch(path.scripts[0] + '*.js', ['jsmin']);
+	gulp.watch(path.images[0] , ['imagemin']);
 })
