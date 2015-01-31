@@ -1,3 +1,1 @@
-function teste(){
-	console.log("Hello World");	
-}
+// Main JS
