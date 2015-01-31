@@ -52,6 +52,6 @@ gulp.task('default', ['clean'], function(){
 
 // Gulp Watch
 gulp.task('watch', function(){
-	gulp.watch('dev/sass/*.scss', ['compile-sass']);
+	gulp.watch('dev/style/*.scss', ['compile-sass']);
 	gulp.watch('dev/images', ['imagemin']);
 })
