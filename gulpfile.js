@@ -33,7 +33,7 @@ gulp.task('compile-sass', function(){
 
 // Images Task
 gulp.task('imagemin', function(){
-	return gulp.src('dev/images/*')
+	return gulp.src('dev/images/**/*')
 	.pipe(imagemin({
 		optimizationLevel: 7,
 		progressive: true,
