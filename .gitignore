@@ -1,9 +1,8 @@
-RawBlameHistory   
+RawBlameHistory
 # Default
 .DS_Store
 *.log
 *.psd
-assets/
 
 # Nodejs Modules
 node_modules
