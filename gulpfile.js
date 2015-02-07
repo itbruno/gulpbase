@@ -44,7 +44,7 @@ gulp.task('imagemin', function(){
 
 // Clean Task
 gulp.task('clean', function(cb) {
-    del(['assets/'], cb)
+    del(['assets/images', 'assets/style', 'assets/js'], cb)
 });
 
 gulp.task('default', ['clean'], function(){
