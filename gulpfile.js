@@ -4,18 +4,20 @@ var gulp = require("gulp"),
 	imagemin = require("gulp-imagemin"),
 	del = require("del"),
 	uglify = require("gulp-uglify");
+	rename = require("gulp-rename");
 
 var path = {
-	styles: ['dev/style/', 'assets/style/'],
-	scripts: ['dev/js/', 'assets/js'],
-	images: ['dev/images', 'assets/images']
+	styles: ['assets/scss/', 'assets/css/'],
+	scripts: 'assets/js/',
+	images: 'assets/images/'
 }
 
 // Uglify JS
 gulp.task('jsmin', function(){
-	gulp.src(path.scripts[0] + '*.js')
+	gulp.src(path.scripts + '*.js')
 	.pipe(uglify())
-	.pipe(gulp.dest(path.scripts[1]))
+	.pipe(rename({suffix: '.min'}))
+	.pipe(gulp.dest(path.scripts + 'min/'))
 });
 
 // Styles
@@ -33,18 +35,18 @@ gulp.task('compile-sass', function(){
 
 // Images Task
 gulp.task('imagemin', function(){
-	return gulp.src('dev/images/**/*')
+	return gulp.src(path.images + '**/*')
 	.pipe(imagemin({
 		optimizationLevel: 7,
 		progressive: true,
 		interlaced: true
 	}))
-	.pipe(gulp.dest('assets/images'))
+	.pipe(gulp.dest(path.images))
 });
 
 // Clean Task
 gulp.task('clean', function(cb) {
-    del(['assets/images', 'assets/style', 'assets/js'], cb)
+    del(['assets/images', 'assets/style', 'assets/js/min'], cb)
 });
 
 gulp.task('default', ['clean'], function(){
@@ -54,6 +56,6 @@ gulp.task('default', ['clean'], function(){
 // Gulp Watch
 gulp.task('watch', function(){
 	gulp.watch(path.styles[0] + '*.scss', ['compile-sass']);
-	gulp.watch(path.scripts[0] + '*.js', ['jsmin']);
-	gulp.watch(path.images[0] , ['imagemin']);
+	gulp.watch(path.scripts + '*.js', ['jsmin']);
+	gulp.watch(path.images, ['imagemin']);
 })
