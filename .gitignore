@@ -4,6 +4,8 @@ RawBlameHistory
 *.log
 *.psd
 *.map
+.sass-cache
+.tmp
 
 # Nodejs Modules
 node_modules
