@@ -24,7 +24,7 @@ gulp.task('jsmin', function(){
 gulp.task('compile-sass', function(){
 	return gulp.src(path.styles[0] + '*.scss')
 		.pipe(sass({
-			sourcemap: false,
+			'sourcemap=none' : true,
 			style: "compressed",
 			noCache: true
 		})).on('error', function(err) {
