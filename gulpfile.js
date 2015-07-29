@@ -4,7 +4,8 @@ var gulp = require("gulp"),
 	imagemin = require("gulp-imagemin"),
 	del = require("del"),
 	uglify = require("gulp-uglify");
-	rename = require("gulp-rename");
+	rename = require("gulp-rename"),
+	rsync = require ("rsyncwrapper").rsync;
 
 var path = {
 	styles: ['assets/scss/', 'assets/css/'],
@@ -49,6 +50,24 @@ gulp.task('clean', function(cb) {
     del(['assets/images', 'assets/style', 'assets/js/min'], cb)
 });
 
+// Build
+gulp.task('build', function(){
+	rsync({
+		src: '', // source path
+		dest: '', // destination
+		exclude: ['node_modules', '.DS_Store', '.editorconfig', '.gitignore'],
+		recursive: true,
+		compareMode: 'checksum',
+		// deleteAll: true, (optional)
+		onStdout: function( data ) {
+			console.log( data.toString() );
+		}
+	}, function( error, stdout, stderr, cmd ) {
+		console.log('Build - END');
+	});
+});
+
+// Default Task
 gulp.task('default', ['clean'], function(){
 	gulp.start('jsmin','compile-sass', 'imagemin')
 });
