@@ -2,9 +2,9 @@
 var gulp = require("gulp"),
 	sass = require("gulp-ruby-sass"),
 	imagemin = require("gulp-imagemin"),
+	uglify = require("gulp-uglify"),
+	concat = require("gulp-concat"),
 	del = require("del"),
-	uglify = require("gulp-uglify");
-	rename = require("gulp-rename"),
 	rsync = require ("rsyncwrapper").rsync;
 
 var path = {
@@ -16,8 +16,8 @@ var path = {
 // Uglify JS
 gulp.task('jsmin', function(){
 	gulp.src(path.scripts)
+	.pipe(concat('main.js'))
 	.pipe(uglify())
-	.pipe(rename({suffix: '.min'}))
 	.pipe(gulp.dest('assets/js/'))
 });
 
