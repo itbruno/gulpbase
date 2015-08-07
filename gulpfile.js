@@ -8,17 +8,17 @@ var gulp = require("gulp"),
 	rsync = require ("rsyncwrapper").rsync;
 
 var path = {
-	styles: ['assets/scss/', 'assets/css/'],
-	scripts: 'assets/js/',
-	images: 'assets/images/'
+	styles: 		['src/scss/**/*.scss', 'assets/css/'],
+	scripts: 		['src/js/*.js', 'assets/js/'],
+	images: 		['src/images/', 'assets/images/']
 }
 
 // Uglify JS
 gulp.task('jsmin', function(){
-	gulp.src(path.scripts + '*.js')
+	gulp.src(path.scripts[0])
 	.pipe(uglify())
 	.pipe(rename({suffix: '.min'}))
-	.pipe(gulp.dest(path.scripts + 'min/'))
+	.pipe(gulp.dest(path.scripts[1]))
 });
 
 // Styles
@@ -36,18 +36,18 @@ gulp.task('compile-sass', function(){
 
 // Images Task
 gulp.task('imagemin', function(){
-	return gulp.src(path.images + '**/*')
+	return gulp.src(path.images[0] + '**/*')
 	.pipe(imagemin({
 		optimizationLevel: 7,
 		progressive: true,
 		interlaced: true
 	}))
-	.pipe(gulp.dest(path.images))
+	.pipe(gulp.dest(path.images[1]))
 });
 
 // Clean Task
 gulp.task('clean', function(cb) {
-    del(['assets/images', 'assets/style', 'assets/js/min'], cb)
+    del('assets/', cb)
 });
 
 // Build
@@ -74,7 +74,7 @@ gulp.task('default', ['clean'], function(){
 
 // Gulp Watch
 gulp.task('watch', function(){
-	gulp.watch(path.styles[0] + '*.scss', ['compile-sass']);
-	gulp.watch(path.scripts + '*.js', ['jsmin']);
+	gulp.watch(path.styles[0], ['compile-sass']);
+	gulp.watch(path.scripts[0], ['jsmin']);
 	gulp.watch(path.images, ['imagemin']);
 })

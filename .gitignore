@@ -6,7 +6,7 @@ RawBlameHistory
 *.map
 .sass-cache
 .tmp
-assets/css
+assets
 
 # Nodejs Modules
 node_modules
