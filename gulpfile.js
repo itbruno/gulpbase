@@ -8,22 +8,22 @@ var gulp = require("gulp"),
 	rsync = require ("rsyncwrapper").rsync;
 
 var path = {
-	styles: 		['src/scss/**/*.scss', 'assets/css/'],
-	scripts: 		['src/js/*.js', 'assets/js/'],
-	images: 		['src/images/', 'assets/images/']
+	styles: 		'src/scss/**/*.scss',
+	scripts: 		['src/js/*.js'], // tip: add 'src/js/vendor/vendor.js' for vendors
+	images: 		'src/images/**/*.{jpg,gif,png}'
 }
 
 // Uglify JS
 gulp.task('jsmin', function(){
-	gulp.src(path.scripts[0])
+	gulp.src(path.scripts)
 	.pipe(uglify())
 	.pipe(rename({suffix: '.min'}))
-	.pipe(gulp.dest(path.scripts[1]))
+	.pipe(gulp.dest('assets/js/'))
 });
 
 // Styles
 gulp.task('compile-sass', function(){
-	return gulp.src(path.styles[0] + '*.scss')
+	return gulp.src(path.styles)
 		.pipe(sass({
 			'sourcemap=none' : true,
 			style: "compressed",
@@ -31,18 +31,18 @@ gulp.task('compile-sass', function(){
 		})).on('error', function(err) {
 			console.log('ERROR:', err.message);
 		})
-		.pipe(gulp.dest(path.styles[1]))
+		.pipe(gulp.dest('assets/css/'))
 });
 
 // Images Task
 gulp.task('imagemin', function(){
-	return gulp.src(path.images[0] + '**/*')
+	return gulp.src(path.images)
 	.pipe(imagemin({
 		optimizationLevel: 7,
 		progressive: true,
 		interlaced: true
 	}))
-	.pipe(gulp.dest(path.images[1]))
+	.pipe(gulp.dest('assets/images/'))
 });
 
 // Clean Task
@@ -74,7 +74,7 @@ gulp.task('default', ['clean'], function(){
 
 // Gulp Watch
 gulp.task('watch', function(){
-	gulp.watch(path.styles[0], ['compile-sass']);
-	gulp.watch(path.scripts[0], ['jsmin']);
+	gulp.watch(path.styles, ['compile-sass']);
+	gulp.watch(path.scripts, ['jsmin']);
 	gulp.watch(path.images, ['imagemin']);
 })
