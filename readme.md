@@ -17,5 +17,5 @@ $ npm install
  - gulp-imagemin
  - gulp-uglify
  - del
- - gulp-rename
+ - gulp-concat
  - rsyncwrapper
