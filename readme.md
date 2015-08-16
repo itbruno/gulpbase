@@ -11,7 +11,7 @@ Now clone the project locally and install all dependencies
 ```
 $ npm install
 ```
-## Modules
+## Packages
  - Gulp
  - gulp-ruby-sass
  - gulp-imagemin
