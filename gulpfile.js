@@ -10,7 +10,7 @@ var gulp = require("gulp"),
 var path = {
 	styles: 		'src/scss/**/*.scss',
 	scripts: 		['src/js/*.js'], // tip: add 'src/js/vendor/vendor.js' for vendors
-	images: 		'src/images/**/*.{jpg,gif,png}'
+	images: 		'src/images/**/*{.jpg,.gif,.png}'
 }
 
 // Uglify JS
