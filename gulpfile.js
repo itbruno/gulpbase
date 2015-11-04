@@ -5,6 +5,7 @@ var gulp = require("gulp"),
 	uglify = require("gulp-uglify"),
 	concat = require("gulp-concat"),
 	del = require("del"),
+	livereload = require('gulp-livereload'),
 	rsync = require ("rsyncwrapper").rsync;
 
 var path = {
@@ -21,7 +22,7 @@ gulp.task('jsmin', function(){
 	.pipe(gulp.dest('assets/js/'))
 });
 
-// Styles
+/* Styles
 gulp.task('compile-sass', function(){
 	return gulp.src(path.styles)
 		.pipe(sass({
@@ -32,6 +33,18 @@ gulp.task('compile-sass', function(){
 			console.log('ERROR:', err.message);
 		})
 		.pipe(gulp.dest('assets/css/'))
+		.pipe(livereload());
+});
+*/
+
+// Sass compiler and compress css
+gulp.task('sass', function() {
+	gulp.src(path.styles)
+	.pipe(sass({outputStyle: 'compressed'})).on('error', function(err) {
+			console.log('ERROR:', err.message);
+		})
+	.pipe(gulp.dest('assets/css/'))
+	.pipe(livereload());
 });
 
 // Images Task
@@ -69,12 +82,13 @@ gulp.task('build', function(){
 
 // Default Task
 gulp.task('default', ['clean'], function(){
-	gulp.start('jsmin','compile-sass', 'imagemin')
+	gulp.start('jsmin','sass','imagemin','watch')
 });
 
 // Gulp Watch
 gulp.task('watch', function(){
-	gulp.watch(path.styles, ['compile-sass']);
+	livereload.listen();
+	gulp.watch(path.styles, ['sass']);
 	gulp.watch(path.scripts, ['jsmin']);
 	gulp.watch(path.images, ['imagemin']);
 })
