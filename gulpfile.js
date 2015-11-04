@@ -1,6 +1,6 @@
 // Packages
 var gulp = require("gulp"),
-	sass = require("gulp-ruby-sass"),
+	sass = require("gulp-sass"),
 	imagemin = require("gulp-imagemin"),
 	uglify = require("gulp-uglify"),
 	concat = require("gulp-concat"),
