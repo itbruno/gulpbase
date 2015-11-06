@@ -22,27 +22,13 @@ gulp.task('jsmin', function(){
 	.pipe(gulp.dest('assets/js/'))
 });
 
-/* Styles
-gulp.task('compile-sass', function(){
-	return gulp.src(path.styles)
-		.pipe(sass({
-			'sourcemap=none' : true,
-			style: "compressed",
-			noCache: true
-		})).on('error', function(err) {
-			console.log('ERROR:', err.message);
-		})
-		.pipe(gulp.dest('assets/css/'))
-		.pipe(livereload());
-});
-*/
-
 // Sass compiler and compress css
 gulp.task('sass', function() {
 	gulp.src(path.styles)
-	.pipe(sass({outputStyle: 'compressed'})).on('error', function(err) {
+	.pipe(sass({outputStyle: 'compressed'
+	})).on('error', function(err) {
 			console.log('ERROR:', err.message);
-		})
+	})
 	.pipe(gulp.dest('assets/css/'))
 	.pipe(livereload());
 });
@@ -82,7 +68,7 @@ gulp.task('build', function(){
 
 // Default Task
 gulp.task('default', ['clean'], function(){
-	gulp.start('jsmin','sass','imagemin','watch')
+	gulp.start('jsmin','sass','imagemin')
 });
 
 // Gulp Watch
