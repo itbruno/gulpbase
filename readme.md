@@ -13,7 +13,7 @@ $ npm install
 ```
 ## Packages
  - Gulp
- - gulp-ruby-sass
+ - gulp-sass
  - gulp-imagemin
  - gulp-uglify
  - del
