@@ -19,3 +19,10 @@ $ npm install
  - del
  - gulp-concat
  - rsyncwrapper
+
+## Livereload ()
+To use livereload, install extension in your browser. Official website: [Livrereload][livereloadChrome]  
+Download Google Chrome extension [here][livereloadChrome].
+
+[livereload]: http://livereload.com/
+[livereloadChrome]: https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei
