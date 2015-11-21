@@ -5,7 +5,7 @@ var gulp = require("gulp"),
 	uglify = require("gulp-uglify"),
 	concat = require("gulp-concat"),
 	del = require("del"),
-	livereload = require('gulp-livereload'),
+	browserSync = require('browser-sync'),
 	rsync = require ("rsyncwrapper").rsync;
 
 var path = {
@@ -29,8 +29,7 @@ gulp.task('sass', function() {
 	})).on('error', function(err) {
 			console.log('ERROR:', err.message);
 	})
-	.pipe(gulp.dest('assets/css/'))
-	.pipe(livereload());
+	.pipe(gulp.dest('assets/css/'));
 });
 
 // Images Task
@@ -66,14 +65,27 @@ gulp.task('build', function(){
 	});
 });
 
+// BrowserSync livereload
+gulp.task('browser-sync', function() {
+    browserSync.init(['assets/css/*.css', 'assets/js/*.js', '*.html'], {
+        server: {
+            baseDir: ''
+        }
+    });
+});
+
 // Default Task
 gulp.task('default', ['clean'], function(){
 	gulp.start('jsmin','sass','imagemin')
 });
 
-// Gulp Watch
-gulp.task('watch', function(){
-	livereload.listen();
+// Gulp Watch 
+/* 
+	Obs: Ao comando "gulp watch" no terminal, as tarefas irão rodar, 
+	depois o browsersync vai iniciar com um endereço local e outro
+	para dispositivos externos e depois fica só aguardando futuras alterações.
+*/
+gulp.task('watch', ['jsmin', 'sass', 'imagemin', 'browser-sync'], function(){
 	gulp.watch(path.styles, ['sass']);
 	gulp.watch(path.scripts, ['jsmin']);
 	gulp.watch(path.images, ['imagemin']);
