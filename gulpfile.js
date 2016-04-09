@@ -5,13 +5,12 @@ var gulp = require("gulp"),
 	uglify = require("gulp-uglify"),
 	concat = require("gulp-concat"),
 	del = require("del"),
-	livereload = require('gulp-livereload'),
 	rsync = require ("rsyncwrapper").rsync;
 
 var path = {
 	styles: 		'src/scss/**/*.scss',
 	scripts: 		['src/js/*.js'], // tip: add 'src/js/vendor/vendor.js' for vendors
-	images: 		'src/images/**/*{.jpg,.gif,.png}'
+	images: 		'src/images/**/*.{jpg,gif,png}'
 }
 
 // Uglify JS
@@ -30,7 +29,6 @@ gulp.task('sass', function() {
 			console.log('ERROR:', err.message);
 	})
 	.pipe(gulp.dest('assets/css/'))
-	.pipe(livereload());
 });
 
 // Images Task
