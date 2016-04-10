@@ -1,10 +1,10 @@
 {
   "name": "GulpBase",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Base structure for projects with GulpJS",
   "repository": {
     "type": "git",
-    "url": "https://github.com/brunodsgn/gulpbase.git"
+    "url": "https://github.com/itbruno/gulpbase.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
