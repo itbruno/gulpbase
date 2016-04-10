@@ -71,7 +71,6 @@ gulp.task('default', ['clean'], function(){
 
 // Gulp Watch
 gulp.task('watch', function(){
-	livereload.listen();
 	gulp.watch(path.styles, ['sass']);
 	gulp.watch(path.scripts, ['jsmin']);
 	gulp.watch(path.images, ['imagemin']);
