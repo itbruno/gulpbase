@@ -1,78 +1,81 @@
-// Packages
-var gulp = require("gulp"),
-	sass = require("gulp-sass"),
-	imagemin = require("gulp-imagemin"),
-	uglify = require("gulp-uglify"),
-	concat = require("gulp-concat"),
-	del = require("del"),
-	rsync = require ("rsyncwrapper").rsync;
+// Settings
+// ------------------------------------------
+var gulp		= require("gulp"),
+	sass		= require("gulp-sass"),
+	imagemin	= require("gulp-imagemin"),
+	uglify		= require("gulp-uglify"),
+	concat		= require("gulp-concat"),
+	del			= require("del"),
+	watch		= require("chokidar");
 
+// Paths
 var path = {
-	styles: 		'src/scss/**/*.scss',
-	scripts: 		['src/js/*.js'], // tip: add 'src/js/vendor/vendor.js' for vendors
-	images: 		'src/images/**/*.{jpg,gif,png}'
+	styles:		'src/scss/**/*.scss',
+	scripts:	['src/js/*.js'], // tip: add 'src/js/vendor/vendor.js' for vendors
+	images:		'src/images/**/*.{jpg,gif,png}'
 }
 
-// Uglify JS
-gulp.task('jsmin', function(){
+// Functions for tasks
+// ------------------------------------------
+// Concat and Minify Javascript files
+function gb_jsmin() {
 	gulp.src(path.scripts)
 	.pipe(concat('main.js'))
 	.pipe(uglify())
+	.on('error', function(err) {
+			console.log('[JS] error:', err.message);
+	})
 	.pipe(gulp.dest('assets/js/'))
-});
+};
 
-// Sass compiler and compress css
-gulp.task('sass', function() {
+// Minify and Compile Scss files
+function gb_styles() {
 	gulp.src(path.styles)
 	.pipe(sass({outputStyle: 'compressed'
 	})).on('error', function(err) {
-			console.log('ERROR:', err.message);
+			console.log('[SCSS] error::', err.message);
 	})
 	.pipe(gulp.dest('assets/css/'))
-});
+};
 
-// Images Task
-gulp.task('imagemin', function(){
+// Compress images
+function gb_imagemin() {
 	return gulp.src(path.images)
 	.pipe(imagemin({
 		optimizationLevel: 7,
 		progressive: true,
 		interlaced: true
-	}))
+	})).on('error', function(err) {
+			console.log('[IMAGE] error:', err.message);
+	})
 	.pipe(gulp.dest('assets/images/'))
-});
+};
 
-// Clean Task
-gulp.task('clean', function(cb) {
-    del('assets/', cb)
-});
+// Clean
+function gb_clean(cb) {
+	del('assets/', cb);
+};
 
-// Build
-gulp.task('build', function(){
-	rsync({
-		src: '', // source path
-		dest: '', // destination
-		exclude: ['node_modules', '.DS_Store', '.editorconfig', '.gitignore'],
-		recursive: true,
-		compareMode: 'checksum',
-		// deleteAll: true, (optional)
-		onStdout: function( data ) {
-			console.log( data.toString() );
-		}
-	}, function( error, stdout, stderr, cmd ) {
-		console.log('Build - END');
-	});
-});
+// Wath files and load tasks
+function gb_watch() {
+	gulp.watch(path.styles, gulp.series('gb_styles'));
+	gulp.watch(path.scripts, gulp.series('gb_jsmin'));
+	gulp.watch(path.images, gulp.series('gb_imagemin'));
+};
 
-// Default Task
-gulp.task('default', ['clean'], function(){
-	gulp.start('jsmin','sass','imagemin')
-});
+// Default task
+function gb_default(done) {
+	gulp.series('gb_clean',
+		gulp.parallel('gb_styles','gb_jsmin','gb_imagemin')
+	);
+	done();
+};
 
-// Gulp Watch
-gulp.task('watch', function(){
-	livereload.listen();
-	gulp.watch(path.styles, ['sass']);
-	gulp.watch(path.scripts, ['jsmin']);
-	gulp.watch(path.images, ['imagemin']);
-})
+// Define Tasks
+// ------------------------------------------
+gulp.task(gb_jsmin);
+gulp.task(gb_styles);
+gulp.task(gb_imagemin);
+gulp.task(gb_clean);
+gulp.task(gb_watch);
+gulp.task('default', gb_default);
